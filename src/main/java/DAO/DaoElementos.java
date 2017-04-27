@@ -17,8 +17,7 @@ public class DaoElementos {
     private Connection conexion;
 
     public DaoElementos() throws URISyntaxException {
-        Conexion db = (Conexion) Conexion.getConnection();
-        this.conexion = db.getConnection();
+        this.conexion= Conexion.getConnection();
     }
 
     public boolean insertar(Elemento elm) {

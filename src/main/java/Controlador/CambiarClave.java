@@ -4,6 +4,9 @@ import DAO.DaoUsuario;
 import Modelo.Solicitante;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,18 +20,22 @@ public class CambiarClave extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String claveNueva = request.getParameter("ClaveNueva");
-        String claveAntigua = request.getParameter("ClaveAntigua");
-
-        HttpSession sesion = request.getSession();
-        DaoUsuario daoUser = new DaoUsuario();
-        Solicitante sol = (Solicitante) sesion.getAttribute("usuario");
-        long id = sol.getIdentificador();        
-        boolean resultado = daoUser.cambiarClave(id, claveNueva, claveAntigua);
-
-        request.setAttribute("CambioClave", resultado);
-        RequestDispatcher rd = request.getRequestDispatcher("CambiarClave.jsp");
-        rd.forward(request, response);
+        try {
+            String claveNueva = request.getParameter("ClaveNueva");
+            String claveAntigua = request.getParameter("ClaveAntigua");
+            
+            HttpSession sesion = request.getSession();
+            DaoUsuario daoUser = new DaoUsuario();
+            Solicitante sol = (Solicitante) sesion.getAttribute("usuario");
+            long id = sol.getIdentificador();
+            boolean resultado = daoUser.cambiarClave(id, claveNueva, claveAntigua);
+            
+            request.setAttribute("CambioClave", resultado);
+            RequestDispatcher rd = request.getRequestDispatcher("CambiarClave.jsp");
+            rd.forward(request, response);
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(CambiarClave.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 

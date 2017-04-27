@@ -3,6 +3,9 @@ package Controlador;
 import DAO.DaoUsuario;
 import Modelo.Solicitante;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +33,12 @@ public class ValidarUsuario extends HttpServlet {
         String usuario = request.getParameter("usuario");
         String clave = request.getParameter("password");
         textoId = new Long(Long.parseLong(usuario));
-        DaoUsuario daoUser = new DaoUsuario();
+        DaoUsuario daoUser = null;
+        try {
+            daoUser = new DaoUsuario();
+        } catch (URISyntaxException ex) {
+            Logger.getLogger(ValidarUsuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
         Solicitante sol = new Solicitante();
         sol = daoUser.validar(textoId, clave);
 

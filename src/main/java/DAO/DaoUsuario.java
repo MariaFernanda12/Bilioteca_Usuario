@@ -18,8 +18,9 @@ public class DaoUsuario {
     private Connection conexion;
 
     public DaoUsuario() throws URISyntaxException {
-        Conexion db = (Conexion) Conexion.getConnection();
-        this.conexion = db.getConnection();
+        
+        this.conexion= Conexion.getConnection();
+        
     }
 
     public Solicitante validar(long usuario, String clave) {
