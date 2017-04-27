@@ -1,41 +1,115 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%@ page import="edu.co.sergio.mundo.vo.*"%>
-<%@ page import="java.util.List" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" 
-    "http://www.w3.org/TR/html4/loose.dtd">
+<%@page import="Modelo.Solicitante"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<!DOCTYPE html>
 <html>
-<style type="text/css">
-body {
-    background-image:
-        url('http://cdn.crunchify.com/wp-content/uploads/2013/03/Crunchify.bg_.300.png');
-}
-</style>
- 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Crunchify JSP Servlet Example</title>
-</head>
-<body>
-    <div align="center" style="margin-top: 50px;">
-        <form action="CrunchifyServlet">
-           Id Depto:  <input type="text" name="id" size="20px"> <br>
-           Nombre Depto:  <input type="text" name="nombre" size="20px"> <br><br>
-        <input type="submit" value="submit">
-        </form>
-     </div>
- 
-    <%
-       if( request.getAttribute("departamentos")!=null){
-          List<Departamento> departamentos  = (List<Departamento>)request.getAttribute("departamentos");
-           for (Departamento departamento : departamentos) {
-         %>      
-         <h1> <%=departamento.getNom_departamento()%> </h1><br/> 
-         <%      
-          }
-       }
-      
-    
-    %>
-</body>
+    <head>
+        <title>Bienvenido</title>                
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="shortcut icon" href="Imagenes/Libros.png">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="CSS/Style.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <style>
+            a.botonMenu:hover, #enlace0{
+                color: white;
+                background-color: black;                 
+                font-size: 37px;    
+                font-family: fantasy;
+                text-shadow: -2px -2px 1px #000, 2px 2px 1px #000, -2px 2px 1px #000, 2px -2px 1px #000;
+            }
+
+            h1{
+                color: white;
+                font-size:52px;   
+                font-family: "Futura Md BT", serif;
+                font-weight: bold;
+                text-shadow: -2px -2px 3px #000, 2px 2px 3px #000, -2px 2px 3px #000, 2px -2px 3px #000;
+            }
+            .centrado{
+                position: absolute;
+                top: 40%; 
+                left: 50%;
+                transform: translate(-50%, -50%);
+                border: 10px solid black;
+                padding-left:  200px;
+                padding-right: 200px;
+                padding-top:  30px;
+                padding-bottom: 50px;
+                margin-top:  30px;
+            }
+            p{
+                color: white;
+                font-size:40px;   
+                font-family: "Futura Md BT", serif;
+                font-weight: bold;
+            }
+            .alert{                
+                font-size:30px;
+                text-align: center;
+            }
+
+
+        </style>
+
+    </head>
+    <body>
+        <header>
+            <!--Encabezado-->
+            <div class="col-sm-2" id="header1">
+                <a href="Home.jsp"><img src="Imagenes/escudo.png" alt="NotFound" id="escudo"></a>                
+            </div>
+            <div class="col-sm-10" id="header2">
+                <div id="mainTitle"><p id="titulo">BIBLIOTECA COLEGIO ANTONIO NARIÑO</p></div>
+            </div>
+        </header>
+        <br>
+        <!--Contenido-->
+        <div class="col-sm-12" id="content">           
+            <h1 style="text-align: center">Bienvenido</h1>
+            <div>
+                <%
+                    if (request.getAttribute("Failed") != null) {
+                        String respuesta = (String) request.getAttribute("Failed");
+                        if (respuesta.equals("NOK")) {
+
+                %>
+                <div class="alert alert-danger">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+                    <strong class="m1">Warning!&nbsp&nbsp&nbsp</strong>USUARIO Y/O CONTRASEÑA INCORRECTOS.
+                </div>
+
+                <%                }
+                %>
+                <%                }
+                %>
+            </div>
+            <div class="centrado">
+                <form method="POST" action="ValidarUsuario">
+                    <div style="text-align: center"><p>Usuario:</p></div>
+                    <input name="usuario" type="text" style="text-align: center; font-size: 30px">
+                    <br>
+                    <br>
+                    <br>
+                    <div style="text-align: center"><p>Contraseña:</p></div>
+                    <input name="password" type="password" style="text-align: center; font-size: 30px">
+                    <br>
+                    <br>
+                    <br>
+                    <div style="text-align: center"><input name="ingresar" type="submit" class="enviar" value="INGRESAR"></div>
+                </form>
+            </div>
+
+        </div>
+
+        <footer>
+            <!Footer Creadores>
+            <div class="col-sm-12" id="footer">
+
+            </div>        
+
+
+        </footer>
+    </body>
 </html>
