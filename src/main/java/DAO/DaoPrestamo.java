@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import Modelo.Prestamo;
 import Util.Conexion;
+import java.net.URISyntaxException;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ public class DaoPrestamo {
 
     private Connection conexion;
 
-    public DaoPrestamo() {
-        Conexion db = Conexion.getConexion();
+    public DaoPrestamo() throws URISyntaxException {
+        Conexion db = Conexion.getConnection();
         this.conexion = db.getConnection();
     }
 
