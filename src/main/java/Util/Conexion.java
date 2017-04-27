@@ -6,38 +6,50 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
+
+   
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.sql.*;
+
 public class Conexion {
+	
+	private static Connection CONEXION=null;
+        
+    	public static Connection getConnection() throws URISyntaxException{
+            URI dbUri = new URI(System.getenv("DATABASE_URL"));
+            String username = dbUri.getUserInfo().split(":")[0];
+            String password = dbUri.getUserInfo().split(":")[1];
+            String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+    
+		   if(CONEXION == null){
+			  	try {
+					CONEXION = DriverManager.getConnection(dbUrl, username, password);
+                        	} catch (SQLException e) {
+					System.out.println("Connection Failed! Check output console");
+					e.printStackTrace();
+				}
 
-    private static Conexion conexion = null;
-    //Gestional la conexion con la base de datos
-    private Connection connection = null;
-
-    private Conexion() {
-        try {
-            //1. Cargar el Driver
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        try {
-            //2. Obtener la conexion
-            this.connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/bibliotecanariño", "root", "root");
-        } catch (SQLException ex) {
-            Logger.getLogger(Conexion.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
-    public static Conexion getConexion() {
-        if (conexion == null) {
-            conexion = new Conexion();
-        }
-        return conexion;
-    }
-
-    public Connection getConnection() {
-        return connection;
-    }
+				
+		   }
+		   return CONEXION;
+	}
+	
+	public static void closeConnection(){
+		 try {
+			 if(CONEXION!=null){
+				 CONEXION.close();
+				 CONEXION=null;
+			 }
+			 
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		    
+	}
+	
 
 }
+
