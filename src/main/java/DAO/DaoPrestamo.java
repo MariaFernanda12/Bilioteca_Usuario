@@ -15,7 +15,7 @@ public class DaoPrestamo {
     private Connection conexion;
 
     public DaoPrestamo() throws URISyntaxException {
-        Conexion db = Conexion.getConnection();
+        Conexion db = (Conexion) Conexion.getConnection();
         this.conexion = db.getConnection();
     }
 
